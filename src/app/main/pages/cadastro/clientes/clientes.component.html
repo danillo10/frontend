@@ -1,0 +1,148 @@
+<div id="products" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent"
+             fxLayout="column" fxLayoutAlign="center center"
+             fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
+
+            <!-- APP TITLE -->
+            <div class="logo mb-24 mb-md-0"
+                 fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    location_city
+                </mat-icon>
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Clientes
+                </span>
+            </div>
+            <!-- / APP TITLE -->
+
+            <!-- SEARCH -->
+            <div class="search-wrapper mx-32 mx-md-0">
+                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>search</mat-icon>
+                    <input #filter placeholder="Procura Rápida">
+                </div>
+            </div>
+            <!-- / SEARCH -->
+
+            <!-- BUTTON IMPORTAR -->
+            <button mat-raised-button
+                    [routerLink]="'/inicio'"
+                    class="add-product-button fuse-white mt-24 mt-md-0">
+                <mat-icon class="s-20">input</mat-icon>
+                <span> IMPORTAR</span>
+            </button>
+            <!-- / BUTTON IMPORTAR -->
+
+            <!-- BUTTON EXPORTAR -->
+            <button mat-raised-button
+                    [routerLink]="'/inicio'"
+                    class="add-product-button fuse-white mt-24 mt-md-0">
+                <mat-icon class="s-20">input</mat-icon>
+                <span> EXPORTAR</span>
+            </button>
+            <!-- / BUTTON EXPORTAR -->
+
+            <!-- ADD BUTTON -->
+            <!--<button mat-fab class="add-button mat-accent" (click)="addCliente()" aria-label="Add imobiliaria"
+                    [@animate]="{value:'*',params:{delay:'300ms',scale:'0.2'}}">
+                <mat-icon>add</mat-icon>
+            </button> -->
+            <button mat-fab class="add-button mat-accent"
+                [routerLink]="'/cadastro/clientes/new'"
+                aria-label="Add Cliente"
+                [@animate]="{value:'*',params:{delay:'300ms',scale:'0.2'}}">
+                <mat-icon>add</mat-icon>
+            </button>
+            <!-- / ADD BUTTON -->
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <mat-table class="products-table"
+                       #table [dataSource]="dataSource"
+                       matSort
+                       [@animateStagger]="{value:'50'}"
+                       fusePerfectScrollbar>
+
+                <!-- Nome -->
+                <ng-container matColumnDef="nome">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Nome</mat-header-cell>
+                    <mat-cell *matCellDef="let cliente">
+                        <p class="text-truncate">{{cliente.nome}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Person -->
+                <ng-container matColumnDef="telefone">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Telefone</mat-header-cell>
+                    <mat-cell *matCellDef="let cliente">
+                        <p class="text-truncate">{{cliente.telefone}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- CPF_CNPJ -->
+                <ng-container matColumnDef="email">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+                    <mat-cell *matCellDef="let cliente">
+                        <!-- Pipe Mask -->
+                        <p class="text-truncate" >{{cliente.email }}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Data de Cadastro -->
+                <ng-container matColumnDef="created_at">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Data de Cadastro</mat-header-cell>
+                    <mat-cell *matCellDef="let cliente">
+                        <p class="text-truncate">{{cliente.created_at | date: 'dd/MM/yyyy' }}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Ações -->
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+                    <mat-cell *matCellDef="let cliente">
+                        <p>
+                            <button mat-icon-button color="primary" [routerLink]="'/cadastro/clientes/'+cliente.id">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+
+                            <button mat-icon-button color="warn" (click)="deleteCliente(cliente)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let cliente; columns: displayedColumns;"
+                         class="product"
+                         matRipple>
+                         <!-- [routerLink]="'/apps/e-commerce/products/'+product.id+'/'+product.handle"> -->
+                </mat-row>
+
+            </mat-table>
+
+            <mat-paginator #paginator
+                           [length]="dataSource.filteredData.length"
+                           [pageIndex]="0"
+                           [pageSize]="10"
+                           [pageSizeOptions]="[5, 10, 25, 100]">
+            </mat-paginator>
+
+        </div>
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+</div>

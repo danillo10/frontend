@@ -1,0 +1,157 @@
+<div id="cliente" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+
+            <!-- APP TITLE -->
+            <div fxLayout="row" fxLayoutAlign="start center">
+
+                <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/cadastro/clientes'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
+                <div fxLayout="column" fxLayoutAlign="start start"
+                     [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2" *ngIf="pageType ==='edit'">
+                        {{cliente.nome}}
+                    </div>
+                    <div class="h2" *ngIf="pageType ==='new'">
+                        Novo Cliente
+                    </div>
+                    <div class="subtitle secondary-text">
+                        <span>Detalhes Cliente</span>
+                    </div>
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+
+            <button mat-raised-button
+                    class="save-product-button"
+                    [disabled]="clienteForm.invalid"
+                    *ngIf="pageType ==='new'" (click)="addCliente()">
+                <span>ADICIONAR</span>
+            </button>
+
+            <button mat-raised-button
+                    class="save-product-button"
+                    [disabled]="clienteForm.invalid || clienteForm.pristine"
+                    *ngIf="pageType ==='edit'" (click)="editCliente()">
+                <span>EDITAR</span>
+            </button>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT -->
+            <div class="content">
+
+                <form name="clienteForm" [formGroup]="clienteForm" class="cliente w-100-p" fxLayout="column" fxFlex>
+
+                    <mat-tab-group>
+
+                        <mat-tab label="Registro">
+
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+                                <mat-card style="margin-bottom: 20px;">
+                                    
+                                <h1 class="negrito"><mat-icon>person</mat-icon> Informações</h1>
+
+
+                                <mat-form-field appearance="fill" floatLabel="always" class="w-100-p">
+                                    <mat-label>Nome</mat-label>
+                                    <input matInput placeholder="Nome"
+                                           name="nome"
+                                           formControlName="nome"
+                                           required>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill" floatLabel="always" class="w-100-p">
+                                    <mat-label>E-mail</mat-label>
+                                    <input matInput placeholder="teste@teste.com"
+                                            type="email"
+                                            name="email"
+                                            formControlName="email"
+                                            required>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill" floatLabel="always" class="w-100-p">
+                                    <mat-label>Nº Telefone</mat-label>
+                                    <input matInput placeholder="(__) _____-____"
+                                            [dropSpecialCharacters]="false"
+                                            mask="(00) 0 0000-0000||(00) 0000-0000"
+                                            name="telefone"
+                                            formControlName="telefone"
+                                            required>
+                                </mat-form-field>
+                                
+                                <mat-form-field appearance="fill" floatLabel="always" class="w-100-p">
+                                    <mat-label>Estado</mat-label>
+                                        <mat-select
+                                            name="estado"
+                                            formControlName="estado"
+                                            required
+                                        >
+                                        <mat-option *ngFor="let estado of estados.siglas" [value]="estado">
+                                            {{estado}}  
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill" floatLabel="always" class="w-100-p">
+                                    <mat-label>Cidade</mat-label>
+                                    <input matInput placeholder="Cidade"
+                                           name="cidade"
+                                           formControlName="cidade"
+                                           required>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill" floatLabel="always" class="w-100-p">
+                                    <mat-label>Data de Nascimento</mat-label>
+                                    <input matInput placeholder="00/00/0000"
+                                            name="data_nascimento"
+                                            formControlName="data_nascimento"
+                                            type="date"
+                                            required>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill" floatLabel="always" class="w-100-p">
+                                    <mat-label>Plano</mat-label>
+                                        <mat-select
+                                            name="plano_id"
+                                            formControlName="plano_id"
+                                            required
+                                        >
+                                        <mat-option *ngFor="let plano of planos" [value]="plano.id">
+                                            {{plano.nome}}  
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                            </mat-card>
+                            </div>
+                        
+                        </mat-tab>
+
+                    </mat-tab-group>
+
+                </form>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>
